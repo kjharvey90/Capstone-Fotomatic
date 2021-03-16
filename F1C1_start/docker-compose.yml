@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  web:
+    image: php:8-apache
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+
+  db:
+    image: linuxserver/mariadb
+    #command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: unless-stopped
+    #ports:
+    #- 3306:3306
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=development
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    volumes:
+      - ./docker/database:/config
